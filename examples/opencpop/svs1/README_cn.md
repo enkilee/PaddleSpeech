@@ -7,6 +7,11 @@
 ### 下载并解压
 从 [官方网站](https://wenet.org.cn/opencpop/download/) 下载数据集
 
+### pip 安装
+```shell
+pip install huggingface_hub==0.25.2
+```
+
 ## 开始
 假设数据集的路径是 `~/datasets/Opencpop`.
 运行下面的命令会进行如下操作：

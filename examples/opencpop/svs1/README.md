@@ -6,6 +6,12 @@ This example contains code used to train a [DiffSinger](https://arxiv.org/abs/21
 ### Download and Extract
 Download Opencpop from it's [Official Website](https://wenet.org.cn/opencpop/download/) and extract it to `~/datasets`. Then the dataset is in the directory `~/datasets/Opencpop`.
 
+### pip install
+```shell
+pip install huggingface_hub==0.25.2
+```
+
+
 ## Get Started
 Assume the path to the dataset is `~/datasets/Opencpop`.
 Run the command below to
