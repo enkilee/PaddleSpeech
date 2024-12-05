@@ -3,15 +3,17 @@ This example contains code used to train a [parallel wavegan](http://arxiv.org/a
 ## Dataset
 ### Download and Extract
 Download CSMSC from it's [official website](https://test.data-baker.com/data/index/TNtts/) and extract it to `~/datasets`. Then the dataset is in the directory `~/datasets/BZNSYP`.
-datasets/BZNSYP should have three folders:
 
-└─ Wave
-  └─ .wav files (audio speech)
-  └─ PhoneLabeling
-      └─ .interval files (alignment between phoneme and duration)
-  └─ ProsodyLabeling
-    └─ 000001-010000.txt (text with prosodic by pinyin)
-Still we only use .wav files in training.
+After processing the data, the ``BZNSYP`` directory will look like this:
+```text
+BZNSYP
+├── Wave
+│    └─ *.wav files (audio speech)
+├── PhoneLabeling
+│    └─ *.interval files (alignment between phoneme and duration)
+└── ProsodyLabeling
+     └─ 000001-010000.txt (text with prosodic by pinyin)
+```
 
 ### Get MFA Result and Extract
 We use [MFA](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner) results to cut silence at the edge of audio.
