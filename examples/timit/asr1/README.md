@@ -3,7 +3,7 @@ The phoneme-based continuous speech corpus is a collaboration between Texas Inst
 
 ## Dataset
 ### Download and Extract
-Download TIMIT from it's [official website](https://catalog.ldc.upenn.edu/LDC93S1) and extract it to `~/datasets`. Then the dataset is in the directory `~/datasets/timit`.
+Download TIMIT from it's [official website](https://catalog.ldc.upenn.edu/LDC93S1) and extract it to `~/datasets`. Assume unzip the dataset in the directory `~/datasets/timit`.
 
 ## Overview
 All the scripts you need are in `run.sh`. There are several stages in `run.sh`, and each stage has its function.
@@ -15,7 +15,7 @@ All the scripts you need are in `run.sh`. There are several stages in `run.sh`, 
 | 3     | Test the final model performance                             |
 | 4     | Get ctc alignment of test data using the final model         |
 
-You can choose to run a range of stages by setting `stage` and `stop_stage `. 
+You can choose to run a range of stages by setting `stage` and `stop_stage `.
 
 For example, if you want to execute the code in stage 2 and stage 3, you can run this script:
 ```bash
@@ -50,7 +50,7 @@ You can set the local variables (except `ckpt`) when you use `run.sh`
 
 For example, you can set the `gpus` and `avg_num` when you use the command line.:
 ```bash
-bash run.sh --gpus 0,1 --avg_num 20
+bash run.sh --gpus 0,1,2,3 --avg_num 10
 ```
 ## Stage 0: Data Processing
 To use this example, you need to process data firstly and you can use stage 0 in `run.sh` to do this. The code is shown below:
@@ -71,7 +71,7 @@ bash run.sh --stage 0 --stop_stage 0
 You can also just run these scripts in your command line.
 ```bash
 source path.sh
-bash ./local/timit_data_prep.sh /path/to/TIMIT
+bash ./local/timit_data_prep.sh ${TIMIT_path}
 bash ./local/data.sh
 ```
 After processing the data, the ``data`` directory will look like this:
@@ -116,12 +116,12 @@ If you want to train the model, you can use the script below to execute stage 0 
 ```bash
 bash run.sh --stage 0 --stop_stage 1
 ```
-or you can run these scripts in the command line (only use CPU).
+or you can run these scripts in the command line.
 ```bash
 source path.sh
-bash ./local/timit_data_prep.sh /path/to/TIMIT
+bash ./local/timit_data_prep.sh ${TIMIT_path}
 bash ./local/data.sh
-CUDA_VISIBLE_DEVICES= ./local/train.sh conf/transformer.yaml transformer
+CUDA_VISIBLE_DEVICES=${gpus} ./local/train.sh conf/transformer.yaml transformer
 ```
 ## Stage 2: Top-k Models Averaging
 After training the model, we need to get the final model for testing and inference. In every epoch, the model checkpoint is saved, so we can choose the best model from them based on the validation loss or we can sort them and average the parameters of the top-k models to get the final model. We can use stage 2 to do this, and the code is shown below:
@@ -136,13 +136,13 @@ If you want to get the final model, you can use the script below to execute stag
 ```bash
 bash run.sh --stage 0 --stop_stage 2
 ```
-or you can run these scripts in the command line (only use CPU).
+or you can run these scripts in the command line.
 ```bash
-bash ./local/timit_data_prep.sh /path/to/TIMIT
+bash ./local/timit_data_prep.sh ${TIMIT_path}
 source path.sh
 bash ./local/data.sh
-CUDA_VISIBLE_DEVICES= ./local/train.sh conf/transformer.yaml transformer
-avg.sh best exp/conformer/checkpoints 20
+CUDA_VISIBLE_DEVICES=${gpus} ./local/train.sh conf/transformer.yaml transformer
+avg.sh best exp/conformer/checkpoints 10
 ```
 ## Stage 3: Model Testing
 The test stage is to evaluate the model performance. The code of the test stage is shown below:
@@ -156,14 +156,14 @@ If you want to train a model and test it, you can use the script below to execut
 ```bash
 bash run.sh --stage 0 --stop_stage 3
 ```
-or you can run these scripts in the command line (only use CPU).
+or you can run these scripts in the command line.
 ```bash
 source path.sh
-bash ./local/timit_data_prep.sh /path/to/TIMIT
+bash ./local/timit_data_prep.sh ${TIMIT_path}
 bash ./local/data.sh
-CUDA_VISIBLE_DEVICES= ./local/train.sh conf/transformer.yaml transformer
-avg.sh best exp/transformer/checkpoints 20
-CUDA_VISIBLE_DEVICES= ./local/test.sh conf/transformer.yaml exp/transformer/checkpoints/avg_20
+CUDA_VISIBLE_DEVICES=${gpus} ./local/train.sh conf/transformer.yaml transformer
+avg.sh best exp/transformer/checkpoints 10
+CUDA_VISIBLE_DEVICES=0 ./local/test.sh conf/transformer.yaml exp/transformer/checkpoints/avg_10
 ```
 ## Stage 4: CTC Alignment 
 If you want to get the alignment between the audio and the text, you can use the ctc alignment. The code of this stage is shown below:
@@ -182,14 +182,14 @@ or if you only need to train a model and do the alignment, you can use these scr
 bash run.sh --stage 0 --stop_stage 2
 bash run.sh --stage 4 --stop_stage 4
 ```
-or you can also use these scripts in the command line (only use CPU).
+or you can also use these scripts in the command line.
 ```bash
 source path.sh
-bash ./local/timit_data_prep.sh /path/to/TIMIT
+bash ./local/timit_data_prep.sh ${TIMIT_path}
 bash ./local/data.sh
-CUDA_VISIBLE_DEVICES= ./local/train.sh conf/transformer.yaml transformer
-avg.sh best exp/transformer/checkpoints 20
+CUDA_VISIBLE_DEVICES=${gpus} ./local/train.sh conf/transformer.yaml transformer
+avg.sh best exp/transformer/checkpoints 10
 # test stage is optional
-CUDA_VISIBLE_DEVICES= ./local/test.sh conf/transformer.yaml exp/transformer/checkpoints/avg_20
-CUDA_VISIBLE_DEVICES= ./local/align.sh conf/transformer.yaml exp/transformer/checkpoints/avg_20
+CUDA_VISIBLE_DEVICES=0 ./local/test.sh conf/transformer.yaml exp/transformer/checkpoints/avg_10
+CUDA_VISIBLE_DEVICES=0 ./local/align.sh conf/transformer.yaml exp/transformer/checkpoints/avg_10
 ```
