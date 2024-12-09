@@ -1,5 +1,5 @@
-# Transformer/Conformer ASR with Timit
-The phoneme-based continuous speech corpus is a collaboration between Texas Instruments, MIT, and SRI International. The [Timit](https://catalog.ldc.upenn.edu/docs/LDC93S1/) dataset has a voice sampling frequency of 16 khz and contains a total of 6,300 sentences, with 630 people from eight major U.S. dialects speaking a given 10 sentences each, all sentences are manually segmented and marked at the phone level. Seventy percent of the speakers are male; most of the speakers are white adults.
+# Transformer ASR with Timit
+The phoneme-based continuous speech corpus is a collaboration between Texas Instruments, MIT, and SRI International. The [Timit](https://catalog.ldc.upenn.edu/docs/LDC93S1/) dataset has a voice sampling frequency of 16 khz and contains a total of 6,300 sentences, with 630 people from 8 major U.S. dialects speaking a given 10 sentences each, all sentences are manually segmented and marked at the phone level. Seventy percent of the speakers are male; most of the speakers are white adults.
 
 ## Dataset
 ### Download and Extract
