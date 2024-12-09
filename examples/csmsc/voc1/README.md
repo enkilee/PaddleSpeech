@@ -14,6 +14,7 @@ BZNSYP
 └── ProsodyLabeling
      └─ 000001-010000.txt (text with prosodic by pinyin)
 ```
+This experiment only uses *.wav files from the Wave file
 
 ### Get MFA Result and Extract
 We use [MFA](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner) results to cut silence at the edge of audio.
