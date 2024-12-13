@@ -95,6 +95,18 @@ benchmark:
 4. `--ngpu` is the number of gpus to use, if ngpu == 0, use cpu.
 
 ### Synthesizing
+We use [parallel wavegan](https://github.com/PaddlePaddle/PaddleSpeech/tree/develop/examples/csmsc/voc1) as the neural vocoder.
+Download pretrained parallel wavegan model from [pwg_baker_ckpt_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/pwgan/pwg_baker_ckpt_0.4.zip) and unzip it.
+```bash
+unzip pwg_baker_ckpt_0.4.zip
+```
+Parallel WaveGAN checkpoint contains files listed below.
+```text
+pwg_baker_ckpt_0.4
+├── pwg_default.yaml               # default config used to train parallel wavegan
+├── pwg_snapshot_iter_400000.pdz   # model parameters of parallel wavegan
+└── pwg_stats.npy                  # statistics used to normalize spectrogram when training parallel wavegan
+```
 `./local/synthesize.sh` calls `${BIN_DIR}/../synthesize.py`, which can synthesize waveform from `metadata.jsonl`.
 ```bash
 CUDA_VISIBLE_DEVICES=${gpus} ./local/synthesize.sh ${conf_path} ${train_output_path} ${ckpt_name}
@@ -126,6 +138,20 @@ optional arguments:
 3. `--test-metadata` is the metadata of the test dataset. Use the `metadata.jsonl` in the `dev/norm` subfolder from the processed directory.
 4. `--output-dir` is the directory to save the synthesized audio files.
 5. `--ngpu` is the number of gpus to use, if ngpu == 0, use cpu.
+
+We use [Fastspeech2](https://github.com/PaddlePaddle/PaddleSpeech/tree/develop/examples/csmsc/tts3) as the acoustic model.
+Download pretrained fastspeech2_nosil model from [fastspeech2_nosil_baker_ckpt_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/fastspeech2/fastspeech2_nosil_baker_ckpt_0.4.zip)and unzip it.
+```bash
+unzip fastspeech2_nosil_baker_ckpt_0.4.zip
+```
+Fastspeech2 checkpoint contains files listed below.
+```text
+fastspeech2_nosil_baker_ckpt_0.4
+├── default.yaml            # default config used to train fastspeech2
+├── phone_id_map.txt        # phone vocabulary file when training fastspeech2
+├── snapshot_iter_76000.pdz # model parameters and optimizer states
+└── speech_stats.npy        # statistics used to normalize spectrogram when training fastspeech2
+```
 
 `./local/synthesize_e2e.sh` calls `${BIN_DIR}/../synthesize_e2e.py`, which can synthesize waveform from text file.
 ```bash
@@ -191,15 +217,19 @@ optional arguments:
 ## Pretrained Models
 The pretrained model can be downloaded here:
 - [pwg_baker_ckpt_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/pwgan/pwg_baker_ckpt_0.4.zip)
+- [fastspeech2_nosil_baker_ckpt_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/fastspeech2/fastspeech2_nosil_baker_ckpt_0.4.zip)
 
 The static model can be downloaded here:
 - [pwg_baker_static_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/pwgan/pwg_baker_static_0.4.zip)
+- [fastspeech2_nosil_baker_static_0.4.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/fastspeech2/fastspeech2_nosil_baker_static_0.4.zip)
 
 The ONNX model can be downloaded here:
 - [pwgan_csmsc_onnx_0.2.0.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/pwgan/pwgan_csmsc_onnx_0.2.0.zip)
+- [fastspeech2_csmsc_onnx_0.2.0.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/fastspeech2/fastspeech2_csmsc_onnx_0.2.0.zip)
 
 The Paddle-Lite model can be downloaded here:
 - [pwgan_csmsc_pdlite_1.3.0.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/pwgan/pwgan_csmsc_pdlite_1.3.0.zip)
+- [fastspeech2_csmsc_pdlite_1.3.0.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/fastspeech2/fastspeech2_csmsc_pdlite_1.3.0.zip)
 
 Model | Step | eval/generator_loss | eval/log_stft_magnitude_loss| eval/spectral_convergence_loss
 :-------------:| :------------:| :-----: | :-----: | :--------:
@@ -213,5 +243,16 @@ pwg_baker_ckpt_0.4
 ├── pwg_snapshot_iter_400000.pdz  # generator parameters of parallel wavegan
 └── pwg_stats.npy                 # statistics used to normalize spectrogram when training parallel wavegan
 ```
+
+FastSpeech2 checkpoint contains files listed below.
+
+```text
+fastspeech2_nosil_baker_ckpt_0.4
+├── default.yaml            # default config used to train fastspeech2
+├── phone_id_map.txt        # phone vocabulary file when training fastspeech2
+├── snapshot_iter_76000.pdz # model parameters and optimizer states
+└── speech_stats.npy        # statistics used to normalize spectrogram when training fastspeech2
+```
+
 ## Acknowledgement
 We adapted some code from https://github.com/kan-bayashi/ParallelWaveGAN.
