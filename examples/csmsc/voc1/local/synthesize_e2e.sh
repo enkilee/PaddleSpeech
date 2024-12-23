@@ -2,7 +2,6 @@
 
 config_path=$1
 train_output_path=$2
-ckpt_name=$3
 
 
 FLAGS_allocator_strategy=naive_best_fit \
