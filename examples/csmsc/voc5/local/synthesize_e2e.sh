@@ -11,7 +11,7 @@ python3 ${BIN_DIR}/../../synthesize_e2e.py \
     --am_config=${config_path} \
     --am_ckpt=${train_output_path}/checkpoints/${ckpt_name} \
     --am_stat=dump/train/speech_stats.npy \
-    --voc=pwgan_csmsc \
+    --voc=hifigan_csmsc \
     --voc_config=hifigan_csmsc_ckpt_0.1.1/default.yaml \
     --voc_ckpt=hifigan_csmsc_ckpt_0.1.1/snapshot_iter_2500000.pdz \
     --voc_stat=hifigan_csmsc_ckpt_0.1.1/feats_stats.npy \
