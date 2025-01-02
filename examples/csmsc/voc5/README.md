@@ -91,7 +91,7 @@ optional arguments:
 4. `--ngpu` is the number of gpus to use, if ngpu == 0, use cpu.
 
 ### Synthesizing
-We use [HiFiGAN](https://github.com/PaddlePaddle/PaddleSpeech/tree/develop/examples/aishell3/voc5) as the neural vocoder.
+We use [HiFiGAN](https://github.com/PaddlePaddle/PaddleSpeech/tree/develop/examples/csmsc/voc5) as the neural vocoder.
 
 Download pretrained HiFiGAN model from [hifigan_csmsc_ckpt_0.1.1.zip](https://paddlespeech.bj.bcebos.com/Parakeet/released_models/hifigan/hifigan_csmsc_ckpt_0.1.1.zip) and unzip it.
 ```bash
