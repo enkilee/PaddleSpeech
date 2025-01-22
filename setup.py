@@ -32,6 +32,14 @@ VERSION = '0.0.0'
 COMMITID = 'none'
 
 
+def determine_python_version():
+    """
+    Determine the current python version. The function return a string such as '3.7'.
+    """
+    python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    return python_version
+
+
 def determine_opencc_version():
     # get gcc version
     gcc_version = None
@@ -53,7 +61,7 @@ def determine_opencc_version():
 
 def determine_scipy_version():
     # get python version
-    python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    python_version = determine_python_version()
 
     # determine scipy version
     if python_version == "3.8":
@@ -63,7 +71,7 @@ def determine_scipy_version():
 
 def determine_matplotlib_version():
     # get python version
-    python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    python_version = determine_python_version()
 
     # determine matplotlib version
     if python_version == "3.8" or python_version == "3.9":
