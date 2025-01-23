@@ -107,7 +107,7 @@ base = [
     "praatio>=6.0.0",
     "prettytable",
     "pydantic",
-    "pypinyin<=0.44.0",
+    "pypinyin",
     "pypinyin-dict",
     "python-dateutil",
     "pyworld>=0.2.12",
